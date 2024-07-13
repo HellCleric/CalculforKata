@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func roman (r string) int {
+func roman(r string) int {
 	romanDict := map[rune]int{'I': 1, 'V': 5, 'X': 10}
 	result := 0
 	prev := 0
@@ -27,7 +27,7 @@ func roman (r string) int {
 	return result
 }
 
-func calcul (a, b int, operator string) int {
+func calcul(a, b int, operator string) int {
 	switch operator {
 	case "+":
 		return a + b
@@ -82,14 +82,14 @@ func main() {
 		if arabic {
 			numA, _ := strconv.Atoi(a)
 			numB, _ := strconv.Atoi(b)
-			result = calculate(numA, numB, operator)
+			result = calcul(numA, numB, operator)
 		} else {
-			numA := romanToInt(a)
-			numB := romanToInt(b)
+			numA := roman(a)
+			numB := roman(b)
 			if numA < 1 || numA > 10 || numB < 1 || numB > 10 {
 				panic("Числа должны быть от I до X")
 			}
-			result = calculate(numA, numB, operator)
+			result = calcul(numA, numB, operator)
 			if result < 1 {
 				panic("Результат не может быть меньше единицы")
 			}
