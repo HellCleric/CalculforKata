@@ -68,12 +68,14 @@ func main() {
 		for _, c := range a {
 			if c < '1' || c > '9' {
 				arabic = false
+				panic("Числа должны быть от 1 до 10")
 				break
 			}
 		}
 		for _, c := range b {
 			if c < '1' || c > '9' {
 				arabic = false
+				panic("Числа должны быть от 1 до 10")
 				break
 			}
 		}
