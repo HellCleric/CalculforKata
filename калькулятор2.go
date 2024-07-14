@@ -9,7 +9,7 @@ import (
 )
 
 func roman(r string) int {
-	romanDict := map[rune]int{'I': 1, 'V': 5, 'X': 10}
+	romanDict := map[rune]int{'I': 1,'II': 2,'III': 3,'IV': 4,'V': 5,'VI': 6,'VII': 7,'VIII': 8,'IX': 9, 'X': 10}
 	result := 0
 	prev := 0
 	for _, c := range r {
