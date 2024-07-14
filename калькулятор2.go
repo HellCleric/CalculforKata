@@ -66,13 +66,13 @@ func main() {
 
 		arabic := true
 		for _, c := range a {
-			if c < '0' || c > '9' {
+			if c < '1' || c > '9' {
 				arabic = false
 				break
 			}
 		}
 		for _, c := range b {
-			if c < '0' || c > '9' {
+			if c < '1' || c > '9' {
 				arabic = false
 				break
 			}
