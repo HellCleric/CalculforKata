@@ -8,35 +8,44 @@ import (
 	"strings"
 )
 
-func roman(r string) int {
-	romanDict := map[rune]int{'I': 1,'V': 5,'X': 10}
+func romanToArabicNumeral(roman string) int {
+	romanMap := map[string]int{
+		"I": 1,
+		"V": 5,
+		"X": 10,
+	}
+
 	result := 0
 	prev := 0
-	for _, c := range r {
-		value, ok := romanDict[c]
-		if !ok {
-			return -1
-		}
-		if value > prev {
-			result += value - 2*prev
+
+	for i := len(roman) - 1; i >= 0; i-- {
+		current := romanMap[string(roman[i])]
+
+		if current >= prev {
+			result += current
 		} else {
-			result += value
+			result -= current
 		}
-		prev = value
+
+		prev = current
 	}
+
 	return result
 }
 
-func calcul(a, b int, operator string) int {
+func calcul(a, b string, operator string) int {
+	numA := romanToArabicNumeral(a)
+	numB := romanToArabicNumeral(b)
+
 	switch operator {
 	case "+":
-		return a + b
+		return numA + numB
 	case "-":
-		return a - b
+		return numA - numB
 	case "*":
-		return a * b
+		return numA * numB
 	case "/":
-		return a / b
+		return numA / numB
 	default:
 		panic("Неправильный оператор")
 	}
@@ -63,35 +72,42 @@ func main() {
 		a := parts[0]
 		operator := parts[1]
 		b := parts[2]
-
+		var result int
 		arabic := true
 		for _, c := range a {
-			if c < '1' || c > '9' {
+			if c == '0' {
 				arabic = false
-				panic("Числа должны быть от 1 до 10")
-				break
+				panic("Нельзя использовать 0")
 			}
 		}
 		for _, c := range b {
-			if c < '1' || c > '9' {
+			if c == '0' {
 				arabic = false
-				panic("Числа должны быть от 1 до 10")
-				break
+				panic("нельзя искользовать 0")
 			}
 		}
 
-		var result int
 		if arabic {
 			numA, _ := strconv.Atoi(a)
 			numB, _ := strconv.Atoi(b)
-			result = calcul(numA, numB, operator)
-		} else {
-			numA := roman(a)
-			numB := roman(b)
-			if numA < 1 || numA > 10 || numB < 1 || numB > 10 {
-				panic("Числа должны быть от I до X")
+			if numA < 0 || numA > 10 || numB < 0 || numB > 10 {
+				panic("Числа должны быть от 1 до 10")
 			}
-			result = calcul(numA, numB, operator)
+			result = calcul(a, b, operator)
+		} else {
+			nA := romanToArabicNumeral(a)
+			nB := romanToArabicNumeral(b)
+
+			if nA < 'I' || nA > 'X' || nB < 'I' || nB > 'X' {
+				panic("Числа должны быть от I до X")
+
+			}
+
+			if nA < 'I' || nA > 'X' || nB < 'I' || nB > 'X' {
+				panic("Числа должны быть от I до X")
+
+			}
+			result = calcul(a, b, operator)
 			if result < 1 {
 				panic("Результат не может быть меньше единицы")
 			}
