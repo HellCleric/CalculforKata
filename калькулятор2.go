@@ -125,8 +125,7 @@ func main() {
 
 		parts := strings.Split(input, " ")
 		if len(parts) != 3 {
-			fmt.Println("Неправильный формат выражения")
-			continue
+			panic("Неправильный формат выражения")
 		}
 
 		a := parts[0]
