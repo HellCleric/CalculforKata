@@ -131,22 +131,17 @@ func main() {
 		a := parts[0]
 		operator := parts[1]
 		b := parts[2]
-		result := calcul(a, b, operator, false)
-		if _, err := strconv.Atoi(a); err != nil {
-			result = calcul(a, b, operator, true)
-		}
-		for _, c := range a {
-			if c == '0' {
-				arabic = false
-				panic("Нельзя использовать 0")
-			}
-		}
-		for _, c := range b {
-			if c == '0' {
-				arabic = false
-				panic("нельзя использовать 0")
-			}
 
+		arabic = true
+		if _, errA := strconv.Atoi(a); errA != nil {
+			arabic = false
+		}
+		if _, errB := strconv.Atoi(b); errB != nil {
+			arabic = false
+		}
+
+		if a == "0" || b == "0" {
+			panic("Нельзя использовать 0")
 		}
 
 		if arabic {
@@ -155,7 +150,8 @@ func main() {
 			if numA < 1 || numA > 10 || numB < 1 || numB > 10 {
 				panic("Числа должны быть от 1 до 10")
 			}
-			result = calcul(a, b, operator, false)
+			result := calcul(a, b, operator, false)
+			fmt.Println("Результат:", result)
 		} else {
 			nA := romanToArabicNumeral(a)
 			nB := romanToArabicNumeral(b)
@@ -163,14 +159,21 @@ func main() {
 			if nA < romanMap["I"] || nA > romanMap["X"] || nB < romanMap["I"] || nB > romanMap["X"] {
 				panic("Числа должны быть от I до X")
 			}
-
-			result = calcul(a, b, operator, true)
+			if nA == romanMap["IIII"] || nB == romanMap["IIII"] ||
+				nA > romanMap["IIIII"] || nB == romanMap["IIIII"] ||
+				nA > romanMap["IIIIII"] || nB == romanMap["IIIIII"] ||
+				nA > romanMap["IIIIIII"] || nB == romanMap["IIIIIII"] ||
+				nA > romanMap["IIIIIIII"] || nB == romanMap["IIIIIIII"] ||
+				nA > romanMap["IIIIIIIII"] || nB == romanMap["IIIIIIIII"] ||
+				nA > romanMap["IIIIIIIIII"] || nB == romanMap["IIIIIIIIII"] {
+				panic("Такого числа в римской системе не существует")
+			}
+			result := calcul(a, b, operator, true)
 			if romanToArabicNumeral(result) < 1 {
 				panic("Результат не может быть меньше единицы")
 			}
 
+			fmt.Println("Результат:", result)
 		}
-
-		fmt.Println("Результат:", result)
 	}
 }
